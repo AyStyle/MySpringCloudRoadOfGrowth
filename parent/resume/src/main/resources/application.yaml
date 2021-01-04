@@ -3,7 +3,7 @@ server:
 
 spring:
     application:
-        name: service-resume
+        name: Resume
     datasource:
         url: jdbc:mysql://localhost:3306/springcloud?serverTimezone=GMT%2B8
         username: "root"
@@ -13,3 +13,19 @@ spring:
         hibernate:
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# 将服务注册到Eureka服务中心当中
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka,http://localhost:8762/eureka
+    instance:
+        # 服务实例中显示IP，而不显示主机名
+        prefer-ip-address: true
+        # 自定义实例名称
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+        # 自定义元数据
+        metadata-map:
+            key1: value1
+            key2: value2
+            

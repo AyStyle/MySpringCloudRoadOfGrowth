@@ -1,2 +1,12 @@
 server:
     port: 8090
+spring:
+    application:
+        name: Auto Deliver
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka,http://localhost:8762/eureka
+    instance:
+        prefer-ip-address: true
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
