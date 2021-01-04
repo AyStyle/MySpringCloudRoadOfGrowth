@@ -28,6 +28,12 @@ public class AutoDeliverController {
         this.discoveryClient = discoveryClient;
     }
 
+    /**
+     * 使用RestTemplate调用Resume接口
+     *
+     * @param userId
+     * @return
+     */
 //    @GetMapping("/checkState/{userId}")
 //    public Integer findResumeOpenState(@PathVariable Long userId) {
 //        // 调用远程服务 -> 简历微服务接口 RestTemplate -> JdbcTemplate
@@ -43,27 +49,42 @@ public class AutoDeliverController {
      * @param userId
      * @return
      */
+//    @GetMapping("/checkState/{userId}")
+//    public Integer findResumeOpenState(@PathVariable Long userId) {
+//        // 从Eureka Server中获取服务实例信息
+//        System.out.println("从Eureka Server中获取Resume服务信息，并提供相应的服务。。。");
+//        // 1. 从Eureka Server中获取Resume服务实例信息（使用EurekaClient对象）
+//        final List<ServiceInstance> resume = discoveryClient.getInstances("Resume");
+//
+//        // 2. 如果有多个实例，选择一个使用（负载均衡的过程）
+//        final ServiceInstance serviceInstance = resume.get(0);
+//
+//        // 3. 从元数据信息中获取IP port等
+//        final String host = serviceInstance.getHost();
+//        final int port = serviceInstance.getPort();
+//        final String key1 = serviceInstance.getMetadata().get("key1");
+//        final String key2 = serviceInstance.getMetadata().get("key2");
+//        System.out.println(String.format("Resume服务元数据host：%s，port：%d，key1：%s，key2：%s" , host , port , key1 , key2));
+//
+//        final String url = String.format("http://%s:%d/resume/openstate/%d" , host , port , userId);
+//
+//        // 调用远程服务 -> 简历微服务接口 RestTemplate -> JdbcTemplate
+//        // 以前httpclient封装好多内容进行远程调用
+//        final Integer resumeOpenState = restTemplate.getForObject(url , Integer.class);
+//
+//        return resumeOpenState;
+//    }
+
+    /**
+     * 使用Ribbon负载均衡来调用Resume接口
+     *
+     * @param userId
+     * @return
+     */
     @GetMapping("/checkState/{userId}")
     public Integer findResumeOpenState(@PathVariable Long userId) {
-        // 从Eureka Server中获取服务实例信息
-        System.out.println("从Eureka Server中获取Resume服务信息，并提供相应的服务。。。");
-        // 1. 从Eureka Server中获取Resume服务实例信息（使用EurekaClient对象）
-        final List<ServiceInstance> resume = discoveryClient.getInstances("Resume");
-
-        // 2. 如果有多个实例，选择一个使用（负载均衡的过程）
-        final ServiceInstance serviceInstance = resume.get(0);
-
-        // 3. 从元数据信息中获取IP port等
-        final String host = serviceInstance.getHost();
-        final int port = serviceInstance.getPort();
-        final String key1 = serviceInstance.getMetadata().get("key1");
-        final String key2 = serviceInstance.getMetadata().get("key2");
-        System.out.println(String.format("Resume服务元数据key1：%s，key2：%s" , key1 , key2));
-
-        final String url = String.format("http://%s:%d/resume/openstate/%d" , host , port , userId);
-
-        // 调用远程服务 -> 简历微服务接口 RestTemplate -> JdbcTemplate
-        // 以前httpclient封装好多内容进行远程调用
+        // 格式：http://服务名/path
+        final String url = String.format("http://resume/resume/openstate/%d" , userId);
         final Integer resumeOpenState = restTemplate.getForObject(url , Integer.class);
 
         return resumeOpenState;
