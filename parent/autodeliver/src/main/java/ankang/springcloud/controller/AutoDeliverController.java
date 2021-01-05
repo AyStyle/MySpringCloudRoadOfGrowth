@@ -1,5 +1,8 @@
 package ankang.springcloud.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -77,10 +80,32 @@ public class AutoDeliverController {
 
     /**
      * 使用Ribbon负载均衡来调用Resume接口
+     * 使用@HystrixCommand commandProperties提供熔断功能
+     * 使用@HystrixCommand fallbackMethod提供降级功能
+     * 使用@HystrixCommand threadPoolKey提供资源隔离（舱壁模式）功能
+     * <p>
+     * 1. 服务提供者处理超时，熔断，返回错误信息
+     * 2. 有可能服务提供者出现异常直接抛出异常信息
+     * 以上信息，都会返回到消费者这里，很多时候消费者服务不希望把收到异常/错误信息再抛到它的上游去
+     * 用户微服务 ->  注册微服务 -> 优惠券微服务
+     * 1.登记注册
+     * 2.分发优惠券（不是核心步骤），这里如果调用优惠券微服务返回了异常信息或者是熔断后的错误信息，这些信息如果抛给了用户很不友好
      *
      * @param userId
      * @return
      */
+    @HystrixCommand(
+            // 线程池唯一标识，如果有相同的标识，则线程池不共用
+            threadPoolKey = "findResumeOpenState",
+            // 线程池细节属性
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "10") ,
+                    @HystrixProperty(name = "maxQueueSize", value = "10")
+            },
+            fallbackMethod = "findResumeOpenStateDefault",
+            commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "200")
+            })
     @GetMapping("/checkState/{userId}")
     public Integer findResumeOpenState(@PathVariable Long userId) {
         // 格式：http://服务名/path
@@ -88,6 +113,14 @@ public class AutoDeliverController {
         final Integer resumeOpenState = restTemplate.getForObject(url , Integer.class);
 
         return resumeOpenState;
+    }
+
+    /**
+     * 定义服务降级方法，返回预设默认值
+     * 注意：该方法形参和返回值与原始方法保持一致
+     */
+    private Integer findResumeOpenStateDefault(Long UserId) {
+        return -1;
     }
 
 }
