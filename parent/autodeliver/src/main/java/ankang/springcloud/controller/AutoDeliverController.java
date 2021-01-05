@@ -104,7 +104,16 @@ public class AutoDeliverController {
             },
             fallbackMethod = "findResumeOpenStateDefault",
             commandProperties = {
-                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "200")
+                    // 超时请求配置
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "200"),
+                    // 断路器统计请求时间窗口
+                    @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "8000"),
+                    // 断路器时间窗口内达到的最小的请求量
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "2"),
+                    // 断路器时间窗口内错误请求占比（百分比）
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
+                    // 断路器间隔多长时间，确认一下服务是否恢复
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "3"),
             })
     @GetMapping("/checkState/{userId}")
     public Integer findResumeOpenState(@PathVariable Long userId) {
