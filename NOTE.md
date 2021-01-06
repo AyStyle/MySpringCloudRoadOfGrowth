@@ -273,3 +273,18 @@ Hystrix主要通过以下几点实现延迟和容错：
 
 Feign = RestTemplate + Ribbon + Hystrix
 ``` 
+
+### 第五节 GateWay网关组件
+```
+网关：微服务中的重要组成部分，Spring Cloud GateWay只是众多网关解决方案中的一种
+```
+#### 5.1 Gateway简介
+```
+   Spring Cloud GateWay是Spring Cloud的一个全新项目，目标是取代Netflix Zuul。
+它基于Spring5.0 + SpringBoot2.0 + WebFlux（基于高性能的Reactor模式响应式通信框架Netty，
+异步非阻塞等模型）等技术开发，性能高于Zuul。官方测试GateWay是Zuul的1.6倍，旨在为微服务
+架构提供一种简单有效的统一的API路由管理方式。
+
+   Spring Cloud GateWay不仅仅提供统一的路由方式（反向代理），并且基于Filter链的方式提供了
+网关基本的功能，例如：鉴权、流量控制、熔断、路径重写、日志监控等
+```
