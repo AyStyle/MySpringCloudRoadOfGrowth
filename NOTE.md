@@ -258,3 +258,18 @@ Hystrix主要通过以下几点实现延迟和容错：
    5. 回退机制：当请求失败、超时、被拒绝，或当断路器打开时，执行回退逻辑。回退逻辑由开发人员自行提供，例如返回一个缺省值。
    6. 自我修复：断路器打开一段时间后，会自动进入“半开”状态。
 ```
+
+### 第四节 Feign远程调用组件
+#### 4.1 Feign简介
+```
+   Feign是Netflix开发的一个轻量级RESTful的HTTP服务客户端，是以Java接口注解的方式调用Http请求，
+而不用像Java中通过封装Http请求报文的方式直接调用，Feign被广泛的应用到SpringCloud的解决方案中。
+
+1. Feign可以帮助我们更加便捷、优雅的调用HTTP API：在SpringCloud中，使用Feign非常简单，
+   创建一个接口，并在接口上添加一些注解，代码就完成了
+2. SpringCloud对Feign进行了增强，使Feign支持了SpringMVC注解
+
+本质：封装了Http调用流程，更符合面向接口化的编程习惯，类似于Dubbo的服务调用
+
+Feign = RestTemplate + Ribbon + Hystrix
+``` 

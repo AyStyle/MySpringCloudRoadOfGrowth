@@ -2,17 +2,12 @@ package ankang.springcloud.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
-import com.netflix.ribbon.proxy.annotation.Hystrix;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 /**
  * @author: ankang
@@ -105,15 +100,15 @@ public class AutoDeliverController {
             fallbackMethod = "findResumeOpenStateDefault",
             commandProperties = {
                     // 超时请求配置
-                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "100"),
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "100") ,
                     // 断路器统计请求时间窗口
-                    @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "8000"),
+                    @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "8000") ,
                     // 断路器时间窗口内达到的最小的请求量
-                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10") ,
                     // 断路器时间窗口内错误请求占比（百分比）
-                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "80"),
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "80") ,
                     // 断路器间隔多长时间，确认一下服务是否恢复
-                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "3"),
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "3") ,
             })
     @GetMapping("/checkState/{userId}")
     public Integer findResumeOpenState(@PathVariable Long userId) {
