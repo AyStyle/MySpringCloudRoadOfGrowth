@@ -28,7 +28,7 @@ public class ResumeController {
     @GetMapping("/openstate/{userId}")
     public Integer findDefaultResumeState(@PathVariable Long userId) {
         // 模拟处理超时
-        Thread.sleep(1000);
+        Thread.sleep((long) (Math.random() * 500));
         final Resume defaultResume = resumeService.findDefaultByUserId(userId);
 
         return defaultResume.getIsOpenResume();

@@ -1,0 +1,20 @@
+server:
+    port: 9000
+
+spring:
+    application:
+        name: hystrix-dashboard
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://EurekaService1:8761/eureka,http://EurekaService2:8762/eureka
+    instance:
+        prefer-ip-address: true
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+
+# Hystrix dashboard配置
+hystrix:
+    dashboard:
+        # 代理stream容许列表，*代表一切
+        proxy-stream-allow-list: "*"

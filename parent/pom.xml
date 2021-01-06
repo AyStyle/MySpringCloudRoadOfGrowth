@@ -9,6 +9,8 @@
         <module>autodeliver</module>
         <module>cloud-8761</module>
         <module>cloud-8762</module>
+        <module>dashboard-9000</module>
+        <module>turbine-9001</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
