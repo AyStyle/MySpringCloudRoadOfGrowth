@@ -1,0 +1,20 @@
+server:
+    port: 9006
+
+spring:
+    application:
+        name: config-9006
+    cloud:
+        config:
+            server:
+                git:
+                    uri: git@github.com:AyStyle/MySpringCloudRoadOfGrowth.git # 配置Git服务地址
+                    default-label: master # Git远程分支配置
+                    search-paths:
+eureka:
+    instance:
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+        prefer-ip-address: true
+    client:
+        service-url:
+            default: http://localhost:8761/eureka,http://localhost:8761/eureka
