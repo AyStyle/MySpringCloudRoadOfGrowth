@@ -8,12 +8,12 @@ spring:
         config:
             server:
                 git:
-                    uri: https://gitee.com/xiaoyaoay/first_stage_module_i.git # 配置Git服务地址
-                    username: aaagit          # 配置Git账号
-                    password: bbb               # 配置Git密码
+                    uri: https://github.com/huanghyw/jd_seckill.git # 配置Git服务地址
+                    username: aaa        # 配置Git账号
+                    password: vvv               # 配置Git密码
+                    default-label: main # Git远程分支配置
                     search-paths:
-                        - first_stage_module_i
-                label: master # Git远程分支配置
+                        - jd_seckill
 eureka:
     instance:
         instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
