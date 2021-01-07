@@ -15,6 +15,6 @@ eureka:
 # Turbine配置
 turbine:
     # app-config配置要聚合的微服务名称，多个服务使用英文逗号分隔
-    app-config: "Auto Deliver"
+    app-config: "Auto-Deliver"
     # 集群名称
     cluster-name-expression: "'default'"

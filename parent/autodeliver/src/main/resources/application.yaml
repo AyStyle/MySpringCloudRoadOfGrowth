@@ -2,7 +2,7 @@ server:
     port: 8090
 spring:
     application:
-        name: Auto Deliver
+        name: Auto-Deliver
 eureka:
     client:
         service-url:

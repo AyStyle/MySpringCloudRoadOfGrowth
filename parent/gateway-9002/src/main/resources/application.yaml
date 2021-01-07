@@ -1,0 +1,29 @@
+server:
+    port: 9002
+
+spring:
+    application:
+        name: gateway-9002
+    # spring cloud配置
+    cloud:
+        # gateway配置
+        gateway:
+            #路由配置，每个路由是一个列表元素
+            routes:
+                -
+                    id: autodeliver-router # 定义路由名称，该名称要求唯一
+                    # uri: http://localhost:8090 # 静态路由：被路由的服务地址。
+                    uri: lb://auto-deliver # 动态路由：uri配置的是一个服务名称，gateway网关从服务注册中心获取实例信息，然后负载路由（lb：load-balance负载均衡）
+                    predicates: # 断言条件，每个断言条件是一个列表元素。Predicate接受一个参数，然后返回一个布尔结果。该接口包含多种默认方法来将Predicate组合成其他复杂逻辑（与、或、非）
+                        - Path=/autodeliver/**
+                    filters: # 过滤器，每个过滤器都是一个列表元素
+                        - StripPrefix=0
+eureka:
+    client:
+        service-url:
+            default: http://localhost:8761/eureka,http://localhost:8762/eureka
+    
+    instance:
+        prefer-ip-address: true
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+        

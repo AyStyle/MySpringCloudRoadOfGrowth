@@ -3,7 +3,7 @@ server:
 
 spring:
     application:
-        name: auto-deliver-feign
+        name: auto-deliver
 
 eureka:
     client:
