@@ -10,13 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
     
     <artifactId>config-9006</artifactId>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-    
+        
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
