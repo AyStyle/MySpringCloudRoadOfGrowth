@@ -9,8 +9,8 @@ spring:
             server:
                 git:
                     uri: https://gitee.com/xiaoyaoay/first_stage_module_i.git # 配置Git服务地址
-                    username: dreedisgood@qq.com         # 配置Git账号
-                    password: An94aiYi100%               # 配置Git密码
+                    username: aaagit          # 配置Git账号
+                    password: bbb               # 配置Git密码
                     search-paths:
                         - first_stage_module_i
                 label: master # Git远程分支配置
