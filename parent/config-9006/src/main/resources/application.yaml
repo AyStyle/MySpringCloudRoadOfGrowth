@@ -8,12 +8,17 @@ spring:
         config:
             server:
                 git:
-                    uri: https://github.com/huanghyw/jd_seckill.git # 配置Git服务地址
-                    username: aaa        # 配置Git账号
-                    password: vvv               # 配置Git密码
-                    default-label: main # Git远程分支配置
+                    uri: https://github.com/AyStyle/MySpringCloudRoadOfGrowth.git # 配置Git服务地址
+                    username: dreedisgood@qq.com        # 配置Git账号
+                    password: An94Fation100%               # 配置Git密码
+                    default-label: master # Git远程分支配置
                     search-paths:
-                        - jd_seckill
+                        - MySpringCloudRoadOfGrowth
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
 eureka:
     instance:
         instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
@@ -21,6 +26,8 @@ eureka:
     client:
         service-url:
             default: http://localhost:8761/eureka,http://localhost:8761/eureka
+            
+            
 # 健康检查
 management:
     endpoints:

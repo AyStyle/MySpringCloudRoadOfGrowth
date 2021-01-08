@@ -4,6 +4,17 @@ server:
 spring:
     application:
         name: auto-deliver
+    cloud:
+        config:
+            name: ${spring.application.name} # 服务名称
+            profile: dev  # 文件后缀
+            uri: http://localhost:9006 # 配置中心uri
+            label: master # 分支名称
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
 
 eureka:
     client:
@@ -13,6 +24,7 @@ eureka:
     instance:
         instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
         prefer-ip-address: true
+
 
 # Ribbon设置
 #针对的被调用方微服务名称,不加就是全局生效
@@ -42,3 +54,8 @@ hystrix:
                 isolation:
                     thread:
                         timeoutInMilliseconds: 120000
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"

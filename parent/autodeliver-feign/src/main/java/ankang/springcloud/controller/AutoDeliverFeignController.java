@@ -18,7 +18,7 @@ public class AutoDeliverFeignController {
 
     private final ResumeServiceFeignClient resumeServiceFeignClient;
 
-    public AutoDeliverFeignController(ResumeServiceFeignClient resumeServiceFeignClient) {
+    public AutoDeliverFeignController(@Qualifier("ankang.springcloud.service.ResumeServiceFeignClient") ResumeServiceFeignClient resumeServiceFeignClient) {
         this.resumeServiceFeignClient = resumeServiceFeignClient;
     }
 
