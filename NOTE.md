@@ -381,4 +381,42 @@ Client端：
    Config Server是集中式的配置服务，用于集中管理应用程序各个环境下的配置。
 默认使用Git存储配置文件内容，也可以使用SVN
 ```
-   
+
+### 第七节 Spring Cloud Stream 分布式配置中心
+```
+Spring Cloud Stream消息驱动组件，帮助我们更快速、更友好、更方便的去构建消息驱动微服务的
+```
+
+#### 7.1 Stream解决的痛点问题
+```
+统一各个消息中间件的API
+```
+
+#### 7.2 Stream重要概念
+```
+   Spring Cloud Stream是一个构建消息驱动微服务的矿建。应用程序通过inputs（相当于消息消费者
+consumer）或outputs（相当于消息生产者producer）来与Spring Cloud Stream中的Binder对象交互，
+而Binder对象是用来屏蔽底层MQ细节的，它负责与具体的消息中间件交互。
+
+   Binder绑定器是Spring Cloud Stream中非常核心的概念，就是通过它来屏蔽底层不同MQ消息中间件的
+细节差异，当需要更换为其他消息中间件时，我们只需要修改Binder为对应消息中间件的Binder对象即可。
+```
+
+#### 7.3 传统MQ模型与Stream消息驱动模型
+
+#### 7.4 Stream消息通信方式及编程模型
+##### 7.4.1 消息通信方式
+```
+   Stream中的消息通信方式遵循了发布-订阅模式。当一条消息被投递到消息中间件之后，他会通过共享的
+Topic主题进行广播，消息消费者在订阅的主题中收到它并触发自身业务逻辑。这里的Topic是Spring Cloud
+Stream中的一个抽象概念，用来代表发布共享消息给消费者的地方。在不同的消息中间件中，Topic可能对应
+着不同的概念，比如：RabbitMQ对应Exchange、Kafka对应Kafka的Topic 
+```
+
+##### 7.4.2 Stream编程注解
+|注解|描述|
+|:---:|:---|
+|@Input|注解标识输入通道，通过该输入通道接受到的消息进入应用程序|
+|@Output|注解标识输出通道，发布的消息将通过该通道离开应用程序|
+|@StreamListener|监听队列，用于消费者队列消息的接受|
+|@EnableBinding|把Channel和Exchange（RabbitMQ）绑定到一起|

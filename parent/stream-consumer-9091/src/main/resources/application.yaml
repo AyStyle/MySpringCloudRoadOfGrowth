@@ -1,0 +1,30 @@
+server:
+    port: 9091
+
+spring:
+    application:
+        name: stream-consumer-9091
+    cloud:
+        stream: # Stream配置
+            binders: # 绑定MQ服务信息（此处使用RabbitMQ）
+                rabbit-binder: # 定义名称，用于后面的关联
+                    type: rabbit # MQ类型
+                    environment: # MQ环境配置（用户名、密码等）
+                        spring:
+                            rabbitmq:
+                                host: localhost
+                                port: 5672
+                                username: guest
+                                password: guest
+            bindings: # 关联整合
+                input: # 定义通道类型
+                    destination: stream-producer-rabbit-exchange # Rabbit要使用的Exchange名称（消息队列主题名）
+                    content-type: text/plain  # 数据类型设置
+                    binder: rabbit-binder # 关联MQ服务
+eureka:
+    client:
+        service-url:
+            default: http://localhost:8761/eureka,http://localhost:8762/eureka
+    instance:
+        prefer-ip-address: true
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
