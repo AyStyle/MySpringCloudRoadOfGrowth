@@ -9,8 +9,8 @@ spring:
             server:
                 git:
                     uri: https://github.com/AyStyle/MySpringCloudRoadOfGrowth.git # 配置Git服务地址
-                    username: dreedisgood@qq.com        # 配置Git账号
-                    password: An94Fation100%               # 配置Git密码
+                    username: aaa        # 配置Git账号
+                    password: bbb               # 配置Git密码
                     default-label: master # Git远程分支配置
                     search-paths:
                         - MySpringCloudRoadOfGrowth
