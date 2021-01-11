@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: server-center
+
+eureka:
+    instance:
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+        prefer-ip-address: false

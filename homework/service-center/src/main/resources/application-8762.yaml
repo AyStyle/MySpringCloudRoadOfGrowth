@@ -1,0 +1,10 @@
+server:
+    port: 8762
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://EurekaService1:8761/eureka/
+    instance:
+        hostname:
+            EurekaService2
