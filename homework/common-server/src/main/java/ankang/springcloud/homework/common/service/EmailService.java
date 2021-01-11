@@ -1,4 +1,4 @@
-package ankang.springcloud.service;
+package ankang.springcloud.homework.common.service;
 
 import org.apache.commons.mail.EmailException;
 

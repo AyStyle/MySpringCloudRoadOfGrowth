@@ -1,6 +1,6 @@
-package ankang.springcloud.dao;
+package ankang.springcloud.homework.common.dao;
 
-import ankang.springcloud.pojo.Token;
+import ankang.springcloud.homework.common.pojo.Token;
 import org.springframework.data.repository.CrudRepository;
 
 /**

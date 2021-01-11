@@ -1,7 +1,7 @@
-package ankang.springcloud.service;
+package ankang.springcloud.homework.common.service;
 
-import ankang.springcloud.dao.IdentifyingCodeDao;
-import ankang.springcloud.pojo.IdentifyingCode;
+import ankang.springcloud.homework.common.dao.IdentifyingCodeDao;
+import ankang.springcloud.homework.common.pojo.IdentifyingCode;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

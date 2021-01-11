@@ -1,7 +1,7 @@
-package ankang.springcloud.service;
+package ankang.springcloud.homework.common.service;
 
-import ankang.springcloud.pojo.Token;
-import ankang.springcloud.dao.TokenDao;
+import ankang.springcloud.homework.common.pojo.Token;
+import ankang.springcloud.homework.common.dao.TokenDao;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package ankang.springcloud.pojo;
+package ankang.springcloud.homework.common.pojo;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

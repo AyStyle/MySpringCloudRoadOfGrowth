@@ -1,6 +1,6 @@
-package ankang.springcloud.dao;
+package ankang.springcloud.homework.common.dao;
 
-import ankang.springcloud.pojo.IdentifyingCode;
+import ankang.springcloud.homework.common.pojo.IdentifyingCode;
 import org.springframework.data.repository.CrudRepository;
 
 /**

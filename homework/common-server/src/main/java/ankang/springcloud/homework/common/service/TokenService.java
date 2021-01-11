@@ -1,6 +1,6 @@
-package ankang.springcloud.service;
+package ankang.springcloud.homework.common.service;
 
-import ankang.springcloud.pojo.Token;
+import ankang.springcloud.homework.common.pojo.Token;
 
 /**
  * @author: ankang
