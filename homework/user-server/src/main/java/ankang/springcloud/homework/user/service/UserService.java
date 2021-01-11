@@ -1,0 +1,31 @@
+package ankang.springcloud.homework.user.service;
+
+import ankang.springcloud.homework.user.exception.UserAccountOrPasswordException;
+import ankang.springcloud.homework.user.exception.UserExistsException;
+import ankang.springcloud.homework.user.pojo.User;
+
+/**
+ * @author: ankang
+ * @email: dreedisgood@qq.com
+ * @create: 2021-01-11
+ */
+public interface UserService {
+
+    /**
+     * 注册用户
+     *
+     * @param user 注册用户
+     * @throws UserExistsException 如果注册的用户已存在，则引发该异常
+     */
+    void register(User user) throws UserExistsException;
+
+
+    /**
+     * 用户登录
+     *
+     * @param user 用户
+     * @throws UserAccountOrPasswordException 如果用户名与密码不匹配引发该异常
+     */
+    void login(User user) throws UserAccountOrPasswordException;
+
+}
