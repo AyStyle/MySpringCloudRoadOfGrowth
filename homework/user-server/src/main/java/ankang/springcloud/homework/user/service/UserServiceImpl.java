@@ -4,6 +4,7 @@ import ankang.springcloud.homework.common.pojo.IdentifyingCode;
 import ankang.springcloud.homework.common.service.IdentifyingCodeService;
 import ankang.springcloud.homework.user.dao.UserDao;
 import ankang.springcloud.homework.user.exception.UserAccountOrPasswordException;
+import ankang.springcloud.homework.user.exception.UserException;
 import ankang.springcloud.homework.user.exception.UserExistsException;
 import ankang.springcloud.homework.user.pojo.User;
 import org.springframework.data.domain.Example;
@@ -27,9 +28,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(User user , IdentifyingCode code) throws UserExistsException {
-        identifyingCodeService.check(code);
-
+    public void register(User user , IdentifyingCode code) throws UserException {
+        if(!identifyingCodeService.check(code)){
+            throw new UserException("验证码不正确");
+        }
 
         final User exampleUser = new User();
         exampleUser.setEmail(user.getEmail());
@@ -44,11 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(User user , IdentifyingCode code) throws UserAccountOrPasswordException {
+    public void login(User user , IdentifyingCode code) throws UserException {
         final Example<User> of = Example.of(user);
 
         if (!userDao.exists(of)) {
             throw new UserAccountOrPasswordException();
         }
     }
+
+    private void identifyingCodeAop()
+
 }
