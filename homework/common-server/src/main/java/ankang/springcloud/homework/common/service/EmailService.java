@@ -1,5 +1,6 @@
 package ankang.springcloud.homework.common.service;
 
+import ankang.springcloud.homework.common.pojo.EmailMessage;
 import org.apache.commons.mail.EmailException;
 
 /**
@@ -12,12 +13,9 @@ public interface EmailService {
     /**
      * 使用SMTP协议发送邮件
      *
-     * @param subject 邮件主题
-     * @param msg     邮件信息
-     * @param from    邮件发送人
-     * @param to      邮件接收人
+     * @param msg      邮件信息
      * @throws EmailException 邮件发送失败异常
      */
-    void sendWithSMTP(String subject , String msg , String from , String[] to) throws EmailException;
+    void sendWithSMTP(EmailMessage msg) throws EmailException;
 
 }

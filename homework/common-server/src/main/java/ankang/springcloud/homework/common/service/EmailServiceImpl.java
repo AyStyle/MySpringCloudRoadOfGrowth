@@ -1,5 +1,6 @@
 package ankang.springcloud.homework.common.service;
 
+import ankang.springcloud.homework.common.pojo.EmailMessage;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
@@ -34,21 +35,18 @@ public class EmailServiceImpl implements EmailService {
     /**
      * 使用SMTP协议发送邮件
      *
-     * @param subject 邮件主题
-     * @param msg     邮件信息
-     * @param from    邮件发送人
-     * @param to      邮件接收人
+     * @param msg 邮件信息
      * @throws EmailException
      */
     @Override
-    public void sendWithSMTP(String subject , String msg , String from , String[] to) throws EmailException {
+    public void sendWithSMTP(EmailMessage msg) throws EmailException {
         Email email = new SimpleEmail();
         setSmtpEmail(email);
 
-        email.setFrom(from);
-        email.setSubject(subject);
-        email.setMsg(msg);
-        email.addTo(to);
+        email.setFrom(msg.getFrom());
+        email.setSubject(msg.getSubject());
+        email.setMsg(msg.getMsg());
+        email.addTo(msg.getTo());
 
         email.send();
     }

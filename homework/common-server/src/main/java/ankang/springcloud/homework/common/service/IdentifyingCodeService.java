@@ -10,7 +10,7 @@ import ankang.springcloud.homework.common.pojo.IdentifyingCode;
 public interface IdentifyingCodeService {
 
     /**
-     * 创建一个验证码与用户邮箱绑定
+     * 创建一个验证码
      *
      * @return
      */
