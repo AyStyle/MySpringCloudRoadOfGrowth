@@ -32,11 +32,14 @@ public class UserController {
      * 注册用户
      *
      * @param form 用户与验证码表单
-     * @throws UserExistsException 如果注册的用户已存在，则引发该异常
+     * @return 注册成功跳到登录页面登录，出错跳到当前页面
      */
     @PostMapping("/register")
-    public String register(UserIdentifyingForm form) throws UserException {
-        userService.register(form.getUser(), form.getCode());
+    public String register(UserIdentifyingForm form) {
+        try {
+            userService.register(form.getUser() , form.getCode());
+        } catch (UserException e) {
+        }
     }
 
 
@@ -45,9 +48,14 @@ public class UserController {
      *
      * @param user 用户
      * @param code 验证码
-     * @throws UserAccountOrPasswordException 如果用户名与密码不匹配引发该异常
+     * @return 登录成功跳到首页，出错跳到当前页面
      */
-    public void login(User user , IdentifyingCode code) throws UserException;
+    public String login(UserIdentifyingForm form) {
+        try {
+            userService.login(form.getUser() , form.getCode());
+        } catch (UserException e) {
+        }
+    };
 
 
 }

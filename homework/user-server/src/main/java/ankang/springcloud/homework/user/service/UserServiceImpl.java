@@ -7,14 +7,20 @@ import ankang.springcloud.homework.user.exception.UserAccountOrPasswordException
 import ankang.springcloud.homework.user.exception.UserException;
 import ankang.springcloud.homework.user.exception.UserExistsException;
 import ankang.springcloud.homework.user.pojo.User;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author: ankang
  * @email: dreedisgood@qq.com
  * @create: 2021-01-11
  */
+@Aspect
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -29,10 +35,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(User user , IdentifyingCode code) throws UserException {
-        if(!identifyingCodeService.check(code)){
-            throw new UserException("验证码不正确");
-        }
-
         final User exampleUser = new User();
         exampleUser.setEmail(user.getEmail());
 
@@ -46,14 +48,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(User user , IdentifyingCode code) throws UserException {
+    public void login(User user , IdentifyingCode code, HttpSession session) throws UserException {
         final Example<User> of = Example.of(user);
 
         if (!userDao.exists(of)) {
             throw new UserAccountOrPasswordException();
         }
+
+        session.setAttribute();
     }
 
-    private void identifyingCodeAop()
+    @Before(value = "this(ankang.springcloud.homework.user.service.UserService) && args(ankang.springcloud.homework.user.pojo.User,ankang.springcloud.homework.common.pojo.IdentifyingCode)", argNames = "user, code")
+    public void check(User user , IdentifyingCode code) throws UserException {
+        if (!identifyingCodeService.check(code)) {
+            throw new UserException("验证码不正确");
+        }
+    }
 
 }
