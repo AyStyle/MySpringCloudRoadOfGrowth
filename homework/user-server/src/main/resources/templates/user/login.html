@@ -83,12 +83,12 @@
     <form action="" id="form">
         <h1 style="text-align: center;color: aliceblue;">登陆</h1>
         <p>用户名:<input id="userNname" type="text"><label id="name_trip"></label></p>
-
-        <p>密码: <input id="password" type="password"><label id="password_trip"></label></p>
+        <p>&nbsp;密码:&nbsp;&nbsp;<input id="password" type="password"><label id="password_trip"></label></p>
+        <p>验证码:<input id="code" type="text"><a href="/identifyingCode/create">获取验证码</a></p>
 
         <div style="text-align: center;margin-top: 30px;">
-            <input type="submit" class="button" onclick="window.open(&quot;meinv.jpg&quot;)" value="登陆">
-            <input type="reset" class="button" value="重置">
+            <input type="submit" class="button" onclick="/user/login" value="登陆">
+            <input type="submit" class="button" onclick="/user/register" value="注册">
         </div>
     </form>
 </div>

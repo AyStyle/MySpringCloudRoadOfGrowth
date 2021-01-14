@@ -4,6 +4,8 @@ server:
 spring:
     application:
         name: user-server
+    thymeleaf:
+        cache: false
 
 eureka:
     client:

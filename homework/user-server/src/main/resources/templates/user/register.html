@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>注册</title>
     <style>
         * {
@@ -17,7 +16,7 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
-            background: url(@{/static/img/backgroud.jpg}) no-repeat 0 0;
+            background: url(../../static/img/backgroud.jpg) no-repeat 0 0;
             background-size: 100% 100%;
             -moz-background-size: 100% 100%;
         }
@@ -109,15 +108,14 @@
     </style>
 </head>
 
-<body background="../../static/img/backgroud.jpg" th:background="@{/static/img/backgroud.jpg}">
+<body>
 <div id="loginDiv">
     <form action="">
         <h1>注册</h1>
         <p>用户姓名:<input id="userNname" type="text" autofocus required><label id="name_trip"></label></p>
-
         <p>用户密码:<input id="password" type="password" required><label id="password_trip"></label></p>
-
         <p>确认密码:<input id="surePassword" type="password" required><label id="surePassword_trip"></label></p>
+        <p>验证码:&nbsp;&nbsp;&nbsp;<input id="code" type="text"><a href="/identifyingCode/create">获取验证码</a></p>
         <!--
                     <p>
                         用户类型:
