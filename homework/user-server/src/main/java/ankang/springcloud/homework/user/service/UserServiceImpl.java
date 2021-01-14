@@ -12,9 +12,6 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 /**
  * @author: ankang
  * @email: dreedisgood@qq.com
@@ -48,17 +45,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(User user , IdentifyingCode code, HttpSession session) throws UserException {
+    public void login(User user , IdentifyingCode code) throws UserException {
         final Example<User> of = Example.of(user);
 
         if (!userDao.exists(of)) {
             throw new UserAccountOrPasswordException();
         }
-
-        session.setAttribute();
     }
 
-    @Before(value = "this(ankang.springcloud.homework.user.service.UserService) && args(ankang.springcloud.homework.user.pojo.User,ankang.springcloud.homework.common.pojo.IdentifyingCode)", argNames = "user, code")
+    @Before(value = "execution(* ankang.springcloud.homework.user.service.UserServiceImpl.*(user,code))", argNames = "user,code")
     public void check(User user , IdentifyingCode code) throws UserException {
         if (!identifyingCodeService.check(code)) {
             throw new UserException("验证码不正确");

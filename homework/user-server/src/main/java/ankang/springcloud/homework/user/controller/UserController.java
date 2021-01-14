@@ -1,17 +1,16 @@
 package ankang.springcloud.homework.user.controller;
 
-import ankang.springcloud.homework.common.pojo.IdentifyingCode;
-import ankang.springcloud.homework.user.exception.UserAccountOrPasswordException;
+import ankang.springcloud.homework.common.service.TokenService;
 import ankang.springcloud.homework.user.exception.UserException;
-import ankang.springcloud.homework.user.exception.UserExistsException;
-import ankang.springcloud.homework.user.pojo.User;
 import ankang.springcloud.homework.user.pojo.UserIdentifyingForm;
 import ankang.springcloud.homework.user.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author: ankang
@@ -22,10 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private static final String HOME_URL = "/home";
+    private static final String LOGIN_URL = "/user/login";
+    private static final String REGISTER_URL = "/user/register";
 
-    public UserController(UserService userService) {
+    private final UserService userService;
+    private final TokenService tokenService;
+
+    public UserController(UserService userService , TokenService tokenService) {
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     /**
@@ -38,7 +43,10 @@ public class UserController {
     public String register(UserIdentifyingForm form) {
         try {
             userService.register(form.getUser() , form.getCode());
+
+            return "redirect:" + LOGIN_URL;
         } catch (UserException e) {
+            return "forward:" + REGISTER_URL;
         }
     }
 
@@ -46,16 +54,22 @@ public class UserController {
     /**
      * 用户登录
      *
-     * @param user 用户
-     * @param code 验证码
+     * @param form     用户和验证码
+     * @param response 响应
      * @return 登录成功跳到首页，出错跳到当前页面
      */
-    public String login(UserIdentifyingForm form) {
+    @PostMapping("/login")
+    public String login(UserIdentifyingForm form , HttpServletResponse response) {
         try {
             userService.login(form.getUser() , form.getCode());
-        } catch (UserException e) {
-        }
-    };
 
+            final Cookie token = new Cookie("token" , tokenService.create().getId());
+            response.addCookie(token);
+
+            return "redirect:" + HOME_URL;
+        } catch (UserException e) {
+            return "forward:" + LOGIN_URL;
+        }
+    }
 
 }

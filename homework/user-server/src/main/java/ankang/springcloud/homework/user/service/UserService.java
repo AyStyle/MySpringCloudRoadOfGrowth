@@ -33,6 +33,6 @@ public interface UserService {
      * @param code 验证码
      * @throws UserAccountOrPasswordException 如果用户名与密码不匹配引发该异常
      */
-    void login(User user , IdentifyingCode code , HttpSession session) throws UserException;
+    void login(User user , IdentifyingCode code) throws UserException;
 
 }
