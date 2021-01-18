@@ -1,0 +1,13 @@
+eureka:
+    instance:
+        prefer-ip-address: false
+    client:
+        service-url:
+            defaultZone: http://EurekaService1:8671/ereuka,http://EurekaService1:8671/ereuka
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mariadb://localhost_out:3306/springcloud
+        username: root
+        password: 888888
+        driver-class-name: org.mariadb.jdbc.Driver

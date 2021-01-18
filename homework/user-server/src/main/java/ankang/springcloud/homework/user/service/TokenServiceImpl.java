@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @FeignClient(
         name = "common-server",
+        contextId = "TokenServiceImpl",
         fallback = ankang.springcloud.homework.common.service.TokenServiceImpl.class,
         path = "/token"
 )

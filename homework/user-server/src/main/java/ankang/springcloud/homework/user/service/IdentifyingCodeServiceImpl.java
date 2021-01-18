@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @FeignClient(
         name = "common-server",
+        contextId = "IdentifyingCodeServiceImpl",
         fallback = IdentifyingCodeServiceFallback.class,
         path = "/identifyingCode"
 )

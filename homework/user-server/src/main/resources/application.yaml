@@ -1,17 +1,15 @@
 server:
-    port: 8090
+    port: 8080
 
 spring:
     application:
         name: user-server
     thymeleaf:
         cache: false
+    jpa:
+        show-sql: true
 
 eureka:
-    client:
-        service-url:
-            default: http://eureka01:8671,http://eureka02:8671
     instance:
-        prefer-ip-address: true
         instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}:@project.version@
         
