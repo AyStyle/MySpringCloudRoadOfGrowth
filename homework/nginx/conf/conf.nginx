@@ -1,0 +1,15 @@
+http {
+    upstream gateway {
+        server localhost:9000 backup;
+        server localhost:9001;
+        server localhost:9002;
+    }
+
+    server {
+        location / {
+            proxy_pass http://gateway;
+        }
+    }
+
+}
+
