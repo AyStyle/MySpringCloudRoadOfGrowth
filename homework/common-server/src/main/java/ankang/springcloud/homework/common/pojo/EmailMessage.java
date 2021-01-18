@@ -12,7 +12,6 @@ public class EmailMessage {
 
     private String subject;
     private String msg;
-    private String from;
     private String[] to;
 
 }

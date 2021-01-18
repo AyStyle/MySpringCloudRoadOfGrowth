@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @create: 2021-01-11
  */
 @Service
-@PropertySource(name = "apacheEmailConfig.properties", value = "classpath:*")
+@PropertySource("classpath:apacheEmailConfig.properties")
 public class EmailServiceImpl implements EmailService {
 
     @Value("${smtp.hostname}")
@@ -43,7 +43,6 @@ public class EmailServiceImpl implements EmailService {
         Email email = new SimpleEmail();
         setSmtpEmail(email);
 
-        email.setFrom(msg.getFrom());
         email.setSubject(msg.getSubject());
         email.setMsg(msg.getMsg());
         email.addTo(msg.getTo());
@@ -56,10 +55,11 @@ public class EmailServiceImpl implements EmailService {
      *
      * @param email
      */
-    private void setSmtpEmail(Email email) {
+    private void setSmtpEmail(Email email) throws EmailException {
         email.setHostName(smtpHostname);
         email.setSmtpPort(smtpPort);
         email.setAuthentication(username , password);
+        email.setFrom(username);
         email.setSSLOnConnect(isSSLEnabled);
     }
 

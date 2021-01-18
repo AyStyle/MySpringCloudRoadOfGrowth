@@ -29,6 +29,7 @@ public class EmailController {
             emailService.sendWithSMTP(msg);
             return true;
         } catch (EmailException e) {
+            e.printStackTrace();
             return false;
         }
     }
