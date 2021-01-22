@@ -4,6 +4,10 @@ import ankang.springcloud.homework.common.pojo.IdentifyingCode;
 import ankang.springcloud.homework.common.service.IdentifyingCodeService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author: ankang
  * @email: dreedisgood@qq.com
@@ -25,8 +29,11 @@ public class IdentifyingController {
      * @return
      */
     @GetMapping("/create")
-    public IdentifyingCode create() {
-        return identifyingCodeService.create();
+    public IdentifyingCode create(HttpSession session) {
+        final IdentifyingCode code = identifyingCodeService.create();
+
+        session.setAttribute("code_id" , code.getId());
+        return code;
     }
 
     /**

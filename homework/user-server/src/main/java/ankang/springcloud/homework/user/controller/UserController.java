@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author: ankang
@@ -39,8 +41,11 @@ public class UserController {
      * @return 注册成功跳到登录页面登录，出错跳到当前页面
      */
     @PostMapping("/register")
-    public String register(UserIdentifyingForm form) {
+    public String register(UserIdentifyingForm form , HttpSession session) {
         try {
+            final String codeId = (String) session.getAttribute("code_id");
+            form.getCode().setId(codeId);
+
             userService.register(form.getUser() , form.getCode());
 
             return "redirect:" + LOGIN_URL;
@@ -58,8 +63,11 @@ public class UserController {
      * @return 登录成功跳到首页，出错跳到当前页面
      */
     @PostMapping("/login")
-    public String login(UserIdentifyingForm form , HttpServletResponse response) {
+    public String login(UserIdentifyingForm form , HttpServletResponse response , HttpSession session) {
         try {
+            final String codeId = (String) session.getAttribute("code_id");
+            form.getCode().setId(codeId);
+
             userService.login(form.getUser() , form.getCode());
 
             final Cookie token = new Cookie("token" , tokenService.create().getId());

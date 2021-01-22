@@ -1,0 +1,37 @@
+server:
+    port: 8080
+
+spring:
+    main:
+        allow-bean-definition-overriding: true
+    session:
+        store-type: redis
+    application:
+        name: gateway-server
+    cloud:
+        gateway:
+            routes:
+                -
+                    id: common-server
+                    uri: lb://common-server
+                    predicates:
+                        - Path=/identifyingCode/**
+                        - Path=/token/**
+                        - Path=/email/**
+                -
+                    id: user-server
+                    uri: lb://user-server
+                    predicates:
+                        - Path=/user/**
+                -
+                    id: user-server
+                    uri: lb://user-server
+                    predicates:
+                        - Path=/home
+                        - Cookie=token, \w\W+
+eureka:
+    instance:
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}:@project.version@
+        prefer-ip-address: true
+    
+    

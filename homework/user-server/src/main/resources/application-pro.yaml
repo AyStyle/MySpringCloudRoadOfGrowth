@@ -7,7 +7,7 @@ eureka:
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mariadb://localhost_out:3306/springcloud
+        url: jdbc:mariadb://MariaDB:6033/springcloud?serverTimezone=GMT%2B8
         username: root
         password: 888888
         driver-class-name: org.mariadb.jdbc.Driver

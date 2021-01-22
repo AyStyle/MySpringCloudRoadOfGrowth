@@ -12,4 +12,3 @@ spring:
 eureka:
     instance:
         instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}:@project.version@
-        
