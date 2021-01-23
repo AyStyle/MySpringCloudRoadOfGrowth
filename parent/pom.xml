@@ -16,6 +16,7 @@
         <module>config-9006</module>
         <module>stream-producer-9090</module>
         <module>stream-consumer-9091</module>
+        <module>zipkin-9411</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
