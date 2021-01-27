@@ -52,11 +52,21 @@ spring:
         url: jdbc:mysql://localhost:3306/springcloud?serverTimezone=GMT%2B8
         username: "root"
         password: "888888"
+        driver-class-name: org.mariadb.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
     jpa:
         show-sql: true
         hibernate:
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    zipkin:
+        base-url: http://localhost:9411
+        sender:
+            type: web
+    
+    sleuth:
+        sampler:
+            probability: 1 # 采样率，代表100%采集，默认：0.1%，生产环境这个值越小越好
 
 
 # 将服务注册到Eureka服务中心当中
@@ -73,4 +83,3 @@ eureka:
         metadata-map:
             key1: value1
             key2: value2
-

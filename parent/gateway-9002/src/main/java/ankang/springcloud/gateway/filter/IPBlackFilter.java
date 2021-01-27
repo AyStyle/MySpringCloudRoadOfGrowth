@@ -21,7 +21,9 @@ import java.util.List;
 @Component
 public class IPBlackFilter implements BlackFilter {
 
-    private static final List<String> BLACK_LIST = List.of("127.0.0.1");
+    private static final List<String> BLACK_LIST = List.of(
+//            "127.0.0.1"
+    );
 
     /**
      * 过滤器核心方法
