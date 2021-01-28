@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -13,6 +14,8 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * @author: ankang
@@ -26,6 +29,11 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    /**
+     * 签名秘钥
+     */
+    private String signingKey = "ankang94NB";
 
     /**
      * 认证服务器安全配置
@@ -74,7 +82,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 // 令牌颁发模式/认证类型，可以配置多个，但不一定都用，具体使用哪种方式颁发，需要客户端调用的时候传递参数指定
                 .authorizedGrantTypes("password" , "refresh_token")
                 // 客户端的权限范围
-                .scopes("all"); //
+                .scopes("all");
     }
 
     /**
@@ -108,7 +116,23 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
      * @return
      */
     private TokenStore buildTokenStore() {
-        return new InMemoryTokenStore();
+//        return new InMemoryTokenStore();
+
+        return new JwtTokenStore(buildTokenConverter());
+    }
+
+    /**
+     * 构造token converter
+     *
+     * @return
+     */
+    private JwtAccessTokenConverter buildTokenConverter() {
+        // 构造JWT token转换器
+        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey(signingKey); // 签名秘钥
+        converter.setVerifier(new MacSigner(signingKey)); // 验证时使用的秘钥
+
+        return converter;
     }
 
     /**
@@ -123,8 +147,12 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenStore(buildTokenStore());
         // 设置token有效时长
-        tokenServices.setAccessTokenValiditySeconds(10);
+        tokenServices.setAccessTokenValiditySeconds(20);
         tokenServices.setRefreshTokenValiditySeconds(30);
+
+        // 设置jwt token转换器
+        tokenServices.setTokenEnhancer(buildTokenConverter());
+
         return tokenServices;
     }
 
