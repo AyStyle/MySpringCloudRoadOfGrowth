@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
+import javax.sql.DataSource;
 import java.util.Collections;
 
 /**
@@ -25,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private DataSource dataSource;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -51,12 +55,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 在这个方法中就可以去关联数据库了，当前我们先把用户信息配置在内存中
-        // 实例化一个用户对象，相当于数据库中的一条用户记录
-        final UserDetails user = new User("admin" , "admin123" , Collections.emptyList());
+        // 在这个方法中就可以去关联数据库了
 
-        auth.inMemoryAuthentication()
-                .withUser(user).passwordEncoder(passwordEncoder);
+        // 当前我们先把用户信息配置在内存中
+        // 实例化一个用户对象，相当于数据库中的一条用户记录
+//        final UserDetails user = new User("admin" , "admin123" , Collections.emptyList());
+//
+//        auth.inMemoryAuthentication()
+//                .withUser(user).passwordEncoder(passwordEncoder);
+
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder);
+
     }
 
 

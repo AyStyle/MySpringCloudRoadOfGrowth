@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.jwt.crypto.sign.MacSigner;
+import org.springframework.security.oauth2.config.annotation.builders.JdbcClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -16,6 +17,9 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import javax.sql.DataSource;
+
 
 /**
  * @author: ankang
@@ -30,6 +34,8 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private DataSource dataSource;
     /**
      * 签名秘钥
      */
@@ -71,18 +77,24 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         super.configure(clients);
+
         // 客户端信息存储在什么地方，可以是内存，可以是数据库
-        clients.inMemory()
-                // 添加一个client配置，指定client_id
-                .withClient("client_lagou")
-                // 指定client的密码
-                .secret("abcdefg")
-                // 指定客户端能访问资源id的清单，此处的资源id是需要在具体的资源服务器上也配置一下
-                .resourceIds("autodeliver")
-                // 令牌颁发模式/认证类型，可以配置多个，但不一定都用，具体使用哪种方式颁发，需要客户端调用的时候传递参数指定
-                .authorizedGrantTypes("password" , "refresh_token")
-                // 客户端的权限范围
-                .scopes("all");
+        // 客户端信息在内存存储
+//        clients.inMemory()
+//                // 添加一个client配置，指定client_id
+//                .withClient("client_lagou")
+//                // 指定client的密码
+//                .secret("abcdefg")
+//                // 指定客户端能访问资源id的清单，此处的资源id是需要在具体的资源服务器上也配置一下
+//                .resourceIds("autodeliver")
+//                // 令牌颁发模式/认证类型，可以配置多个，但不一定都用，具体使用哪种方式颁发，需要客户端调用的时候传递参数指定
+//                .authorizedGrantTypes("password" , "refresh_token")
+//                // 客户端的权限范围
+//                .scopes("all");
+
+        // 客户端信息在JDBC中存储
+        clients.jdbc(dataSource);
+
     }
 
     /**
@@ -131,6 +143,8 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(signingKey); // 签名秘钥
         converter.setVerifier(new MacSigner(signingKey)); // 验证时使用的秘钥
+        converter.setAccessTokenConverter();
+
 
         return converter;
     }

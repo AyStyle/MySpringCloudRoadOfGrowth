@@ -24,6 +24,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>2.3.6.RELEASE</version>
         </dependency>
         
         <dependency>
@@ -59,7 +60,6 @@
             <artifactId>zipkin-autoconfigure-storage-mysql</artifactId>
             <version>2.12.9</version>
         </dependency>
-
     </dependencies>
 
 </project>
