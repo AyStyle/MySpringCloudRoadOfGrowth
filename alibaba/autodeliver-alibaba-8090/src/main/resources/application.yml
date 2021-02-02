@@ -1,0 +1,9 @@
+server:
+    port: 8090
+spring:
+    application:
+        name: autodeliver-alibaba-8090
+    cloud:
+        nacos:
+            discovery:
+                server-addr: http://localhost:8848

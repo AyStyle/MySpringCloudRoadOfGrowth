@@ -506,3 +506,28 @@ Spring Cloud Sleuth（追踪服务框架）可以追踪服务之间的调用，S
 access_token（访问令牌），而这个token是受其他微服务信任的。
 ```
 
+### 第七部分 - SpringCloudAlibaba
+#### 7.1 Nacos 服务注册和配置中心
+```
+    Nacos（Dynamic Naming and Configuration Service）是阿里巴巴开源的一个针对微服务架构中
+服务发现、配置管理和服务管理平台。
+    
+    Nacos就是注册中心 + 配置中心的组合（Nacos = Eureka + Config + Bus）
+    
+    Nacos功能特性：
+        1. 服务发现与健康检查
+        2. 动态配置管理
+        3. 动态DNS服务
+        4. 服务和元数据管理
+```
+
+#### 7.1.3 Nacos 数据模型
+```
+    Namespace命名空间、Group、集群这些都是为了进行归类管理，把服务和配置文件进行归类，
+归类之后就可以实现一定的效果，比如：隔离 - 不同命名空间中的服务不能够相互访问和调用。
+    
+    Namespace：命名空间，对于不同的环境进行隔离，例如：开发、测试、生产
+    Group：分组，将若干个服务或若干个配置集归为一组，通常习惯一个系统归为一个组
+    Service：某一个服务，比如简历微服务
+    DataId：配置集可以认为是一个配置文件 
+```
